@@ -71,7 +71,8 @@
 
 	<script>
 		$(document).ready(function(){
-			var params = attribution.params().query;
+			const params = attribution.params().query;
+			rudderanalytics.page(params);
 
 			$("a").click(function(){
 				rudderanalytics.track("Link Clicked", {
@@ -89,7 +90,15 @@
 				});
 			});
 			$("form").submit(function(){
-				var form_data = $(this).serializeArray();
+				const form_data = $(this).serializeArray();
+				rudderanalytics.identify({
+					"email": form_data.find(x => x.name === "Email").value,
+					"first_name": form_data.find(x => x.name === "First-Name").value,
+					"last_name": form_data.find(x => x.name === "Last-Name").value,
+					"phone": form_data.find(x => x.name === "Phone").value,
+					...params
+				});
+
 				rudderanalytics.track("Form Submitted", {
 					"form_id": $(this).attr("id"),
 					"current_url": window.location.href,
