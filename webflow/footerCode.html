@@ -1,0 +1,40 @@
+<script>
+	$(document).ready(function(){
+		const params = attribution.params().query;
+		rudderanalytics.page(params);
+
+		$("a").click(function(){
+			rudderanalytics.track("Link Clicked", {
+				"link_text": $(this).text(),
+				"destination_url": $(this).attr("href"),
+				"current_url": window.location.href,
+				...params
+			});
+		});
+		$("button").click(function(){
+			rudderanalytics.track("Button Clicked", {
+				"button_text": $(this).text(),
+				"current_url": window.location.href,
+				...params
+			});
+		});
+		$("form").submit(function(){
+			const form_data = $(this).serializeArray();
+			rudderanalytics.identify({
+				"email": form_data.find(x => x.name === "Email").value,
+				"first_name": form_data.find(x => x.name === "First-Name").value,
+				"last_name": form_data.find(x => x.name === "Last-Name").value,
+				"phone": form_data.find(x => x.name === "Phone").value,
+				...params
+			});
+
+			rudderanalytics.track("Form Submitted", {
+				"form_id": $(this).attr("id"),
+				"current_url": window.location.href,
+				...params,
+				"form_data": form_data
+			});
+		});
+	
+	})
+</script>
