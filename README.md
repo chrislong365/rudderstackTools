@@ -9,8 +9,6 @@ Basic starter toolkit for adding attribution to your website, setting up rudders
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Installation
