@@ -73,6 +73,7 @@
 		$(document).ready(function(){
 			const params = attribution.params().query;
 			rudderanalytics.page(params);
+			// const anonId = rudderanalytics.anonymousId();
 
 			$("a").click(function(){
 				rudderanalytics.track("Link Clicked", {
@@ -91,19 +92,23 @@
 			});
 			$("form").submit(function(){
 				const form_data = $(this).serializeArray();
-				rudderanalytics.identify({
-					"email": form_data.find(x => x.name === "Email").value,
-					"first_name": form_data.find(x => x.name === "First-Name").value,
-					"last_name": form_data.find(x => x.name === "Last-Name").value,
-					"phone": form_data.find(x => x.name === "Phone").value,
-					...params
-				});
+				// rudderanalytics.identify(anonId, {
+				// 	"email": form_data.find(x => x.name === "Email").value,
+				// 	"firstName": form_data.find(x => x.name === "First-Name").value,
+				// 	"lastName": form_data.find(x => x.name === "Last-Name").value,
+				// 	"phone": form_data.find(x => x.name === "Phone").value,
+				// 	...params
+				// });
 
 				rudderanalytics.track("Form Submitted", {
 					"form_id": $(this).attr("id"),
 					"current_url": window.location.href,
 					...params,
-					"form_data": form_data
+					"form_data": form_data,
+					"email": form_data.find(x => x.name === "Email").value,
+					"firstName": form_data.find(x => x.name === "First-Name").value,
+					"lastName": form_data.find(x => x.name === "Last-Name").value,
+					"phone": form_data.find(x => x.name === "Phone").value,
 				});
 			});
 		
